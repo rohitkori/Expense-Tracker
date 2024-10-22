@@ -23,6 +23,11 @@ class Expense(models.Model):
     title = models.CharField(max_length=100)
     amount = models.DecimalField(max_digits=10, decimal_places=2)
     description = models.CharField(max_length=255, blank=True, null=True)
+    splitting_method = models.CharField(max_length=10, choices=[
+        ('equal', 'Equal'),
+        ('exact', 'Exact'),
+        ('percentage', 'Percentage')
+    ])
     is_settled = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -34,11 +39,8 @@ class Participant(models.Model):
     expense = models.ForeignKey(Expense, related_name='participants', on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     split_amount = models.DecimalField(max_digits=10, decimal_places=2)
-    splitting_method = models.CharField(max_length=10, choices=[
-        ('equal', 'Equal'),
-        ('exact', 'Exact'),
-        ('percentage', 'Percentage')
-    ])
+
+    is_settled = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

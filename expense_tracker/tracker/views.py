@@ -1,7 +1,9 @@
-from rest_framework import status
+from rest_framework import status, viewsets
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.decorators import action
+from decimal import Decimal
 
 from .models import User, Expense
 from .serializers import UserSerializer, ExpenseSerializer
@@ -25,26 +27,13 @@ class CreateUserView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-class AddExpenseView(APIView):
+class ExpenseViewSet(APIView):
     serializer_class = ExpenseSerializer
-    permission_classes = [IsAuthenticated]
-    
+    queryset = Expense.objects.all()
+
     def post(self, request):
-        data = request.data
-        data['user'] = request.user.id
-        
-        serializer = self.serializer_class(data=data, context={'request': request})
+        serializer = self.serializer_class(data=request.data, context={'request': request})
         if serializer.is_valid():
-            expense = serializer.save()
-            return Response({
-                'message': 'Expense added and split successfully!',
-                'expense': ExpenseSerializer(expense).data
-            }, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)       
-
-
-class GetExpensesView(APIView):
-    def get(self, request):
-        expenses = Expense.objects.filter(user=request.user)
-        serializer = ExpenseSerializer(expenses, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
