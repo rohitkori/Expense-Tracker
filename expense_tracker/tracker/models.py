@@ -10,6 +10,7 @@ class User(AbstractUser):
     USERNAME_FIELD = 'email'
     first_name = models.CharField(max_length=100, verbose_name='First Name', blank=True, null=True)
     last_name = models.CharField(max_length=100, verbose_name='Last Name', blank=True, null=True)
+    mobile_number = models.CharField(max_length=10, verbose_name='Mobile Number', blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     balance_sheet = models.FileField(upload_to='balance_sheets/', null=True, blank=True)

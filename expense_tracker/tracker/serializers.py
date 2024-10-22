@@ -1,11 +1,14 @@
 from rest_framework import serializers
-from .models import User, Expense, Participant
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from decimal import Decimal
+
+from .models import User, Expense, Participant
+
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('id', 'email', 'password')
+        fields = ('id', 'email', 'password', 'mobile_number')
         extra_kwargs = {'password': {'write_only': True, 'required': True}}
     
     def create(self, validated_data):
@@ -15,7 +18,14 @@ class UserSerializer(serializers.ModelSerializer):
 class UserDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('id', 'email', 'first_name', 'last_name', 'created_at', 'updated_at', 'balance_sheet')
+        fields = ('id', 'email', 'first_name', 'last_name', 'created_at', 'updated_at', 'balance_sheet', 'mobile_number')
+
+class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
+    @classmethod
+    def get_token(cls, user):
+        token = super(MyTokenObtainPairSerializer, cls).get_token(user)
+        token['email'] = user.email
+        return token
     
 class ParticipantSerializer(serializers.ModelSerializer):
     user = serializers.PrimaryKeyRelatedField(queryset=User.objects.all())

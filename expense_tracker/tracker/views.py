@@ -2,6 +2,7 @@ from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
+from rest_framework_simplejwt.views import TokenObtainPairView
 import csv
 from io import StringIO
 from django.core.files.base import ContentFile
@@ -9,7 +10,7 @@ from django.conf import settings
 import os
 
 from .models import User, Expense, Participant
-from .serializers import UserSerializer, ExpenseSerializer, ParticipantSerializer, ParticipantOwedSerializer, UserDetailSerializer
+from .serializers import UserSerializer, ExpenseSerializer, ParticipantSerializer, ParticipantOwedSerializer, UserDetailSerializer, MyTokenObtainPairSerializer
 
 # Create your views here.
 
@@ -38,6 +39,9 @@ class GetUserView(APIView):
         user = request.user
         serializer = self.serializer_class(user)
         return Response(serializer.data, status=status.HTTP_200_OK)
+
+class MyObtainTokenPairView(TokenObtainPairView):
+    serializer_class = MyTokenObtainPairSerializer
 
 
 class ExpenseViewSet(APIView):
