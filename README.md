@@ -34,4 +34,8 @@ python manage.py runserver
 
 - Note: The server will run on `http://127.0.0.1:8000/`
 
+- To run tests
+```
+python manage.py test
+```
 
