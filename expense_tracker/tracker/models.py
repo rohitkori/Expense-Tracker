@@ -38,7 +38,7 @@ class Expense(models.Model):
         return self.title + ' - ' + str(self.amount)
     
 class Participant(models.Model):
-    expense = models.ForeignKey(Expense, on_delete=models.CASCADE)
+    expense = models.ForeignKey(Expense, related_name='participants',on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     split_amount = models.DecimalField(max_digits=10, decimal_places=2)
 

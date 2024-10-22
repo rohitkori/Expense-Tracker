@@ -202,3 +202,4 @@ SIMPLE_JWT = {
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+BACKEND_URL = config('BACKEND_URL', default='http://localhost:8000')

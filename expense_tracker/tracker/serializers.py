@@ -27,7 +27,7 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
         token['email'] = user.email
         return token
     
-class ParticipantSerializer(serializers.ModelSerializer):
+class ParticipantExpenseSerializer(serializers.ModelSerializer):
     user = serializers.PrimaryKeyRelatedField(queryset=User.objects.all())
     split_amount = serializers.DecimalField(max_digits=10, decimal_places=2, required=False)
     percentage = serializers.DecimalField(max_digits=5, decimal_places=2, required=False)
@@ -37,7 +37,7 @@ class ParticipantSerializer(serializers.ModelSerializer):
         fields = ['user', 'split_amount', 'percentage']
 
 class ExpenseSerializer(serializers.ModelSerializer):
-    participants = ParticipantSerializer(many=True)
+    participants = ParticipantExpenseSerializer(many=True)
     splitting_method = serializers.ChoiceField(choices=['EQUAL', 'EXACT', 'PERCENTAGE'])
 
     class Meta:
