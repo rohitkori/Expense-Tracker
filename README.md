@@ -39,3 +39,11 @@ python manage.py runserver
 python manage.py test
 ```
 
+## Docker
+
+To run the application using docker, run the following command:
+```
+docker compose up
+```
+
+- Note: The server will run on `http://127.0.0.1:8000/`
