@@ -10,6 +10,7 @@ django-import-export = "*"
 django-cors-headers = "*"
 django-filter = "*"
 django-decouple = "*"
+djangorestframework-simplejwt = "*"
 
 [dev-packages]
 
