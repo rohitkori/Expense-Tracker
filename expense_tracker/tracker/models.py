@@ -36,7 +36,7 @@ class Expense(models.Model):
         return self.title + ' - ' + str(self.amount)
     
 class Participant(models.Model):
-    expense = models.ForeignKey(Expense, related_name='participants', on_delete=models.CASCADE)
+    expense = models.ForeignKey(Expense, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     split_amount = models.DecimalField(max_digits=10, decimal_places=2)
 
@@ -45,4 +45,4 @@ class Participant(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return self.expense.title + ' - ' + self.user.email + ' - ' + str(self.amount)
+        return self.expense.title + ' - ' + self.user.email + ' - ' + str(self.split_amount)

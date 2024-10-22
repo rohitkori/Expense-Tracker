@@ -84,3 +84,12 @@ class ExpenseSerializer(serializers.ModelSerializer):
                 raise serializers.ValidationError("The total split amount must equal the expense amount.")
 
         return data
+
+
+class ParticipantSerializer(serializers.ModelSerializer):
+    split_created_by = serializers.CharField(source='expense.user.email')
+    split_title = serializers.CharField(source='expense.title')
+    
+    class Meta:
+        model = Participant
+        fields = ['split_created_by', 'split_title', 'split_amount', 'is_settled']
