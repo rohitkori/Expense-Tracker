@@ -1,6 +1,6 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
-from tracker.views import CreateUserView, ExpenseViewSet, GetIndividualExpensesView, GetOverallExpensesView
+from tracker.views import CreateUserView, ExpenseViewSet, GetIndividualExpensesView, GetOverallExpensesView, GetBalanceSheetView
 
 router = DefaultRouter()
 
@@ -10,5 +10,6 @@ urlpatterns = [
     path('add-expense/', ExpenseViewSet.as_view(), name='add-expense'),
     path('get-individual-expenses/', GetIndividualExpensesView.as_view(), name='get-individual-expenses'),
     path('get-overall-expenses/', GetOverallExpensesView.as_view(), name='get-overall-expenses'),
+    path('get-balance-sheet/', GetBalanceSheetView.as_view(), name='get-balance-sheet'),
 
 ]

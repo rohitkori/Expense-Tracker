@@ -12,6 +12,7 @@ class User(AbstractUser):
     last_name = models.CharField(max_length=100, verbose_name='Last Name', blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    balance_sheet = models.FileField(upload_to='balance_sheets/', null=True, blank=True)
     objects = UserManager()
     REQUIRED_FIELDS = []
 
