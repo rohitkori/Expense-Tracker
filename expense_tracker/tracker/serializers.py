@@ -93,3 +93,11 @@ class ParticipantSerializer(serializers.ModelSerializer):
     class Meta:
         model = Participant
         fields = ['split_created_by', 'split_title', 'split_amount', 'is_settled']
+
+class ParticipantOwedSerializer(serializers.ModelSerializer):
+    owed_by = serializers.CharField(source='user.email')
+    split_title = serializers.CharField(source='expense.title')
+
+    class Meta:
+        model = Participant
+        fields = ['owed_by', 'split_title', 'split_amount', 'is_settled']
