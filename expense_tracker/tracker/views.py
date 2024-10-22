@@ -9,7 +9,7 @@ from django.conf import settings
 import os
 
 from .models import User, Expense, Participant
-from .serializers import UserSerializer, ExpenseSerializer, ParticipantSerializer, ParticipantOwedSerializer
+from .serializers import UserSerializer, ExpenseSerializer, ParticipantSerializer, ParticipantOwedSerializer, UserDetailSerializer
 
 # Create your views here.
 
@@ -28,6 +28,16 @@ class CreateUserView(APIView):
             serializer.save()
             return Response({'message': 'User created successfully!'}, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+
+class GetUserView(APIView):
+    permission_classes = [IsAuthenticated]
+    serializer_class = UserDetailSerializer
+
+    def get(self, request):
+        user = request.user
+        serializer = self.serializer_class(user)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
 
 class ExpenseViewSet(APIView):
